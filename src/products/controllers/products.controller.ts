@@ -1,54 +1,49 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
-import { ProductsService } from '../services/products/products.service';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+
+import { ProductsService } from '../services/products.service';
 
 @Controller('products')
 export class ProductsController {
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService) { }
 
-  @Get()
-  getProducts(
-    @Query('limit') limit = 100,
-    @Query('offset') offset = 0,
-    @Query('brand') brand: string,
-  ) {
+  // Without Service
+  // @Get('')
+  // getProducts(
+    // @Query('limit') limit: 25,
+    // @Query('offset') offset: 0,
+    // @Query('brand') brand: string
+    // ) {
     // return {
-    //   message: `products limit=> ${limit} offset=> ${offset} brand=> ${brand}`
+    //   message: `products limit: ${limit}, offset: ${offset}, brand: ${brand}`
     // };
-    return this.productsService.findAll()
+  // }
+
+  // With Service
+  @Get('')
+  getProducts() {
+    return this.productsService.findAll();
   }
 
   @Get(':productId')
-  getOne(@Param('productId') productId: number) {
-    // return {
-    //   message: `product ${productId}`
-    // };
+  getProduct(@Param('productId', ParseIntPipe) productId: number) {
     return this.productsService.findOne(productId);
   }
 
-  @Post()
-  create(@Body() payload: any) {
-    // return {
-    //   message: 'create',
-    //   payload,
-    // };
+  @Post('')
+  createProduct(@Body() payload: any ) {
     return this.productsService.create(payload);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any) {
-    // return {
-    //   id,
-    //   payload,
-    // };
-    return this.productsService.update(id, payload);
+  // @Patch(':productId')
+  @Put(':productId')
+  updateProduct(@Param('productId', ParseIntPipe) productId: number, @Body() payload: any ) {
+    return this.productsService.update(productId, payload);
   }
 
-  @Delete(':id')
-  delete(@Param('id') id: number) {
-    // return {
-    //   message: `product ${id} deleted`,
-    // };
-    return this.productsService.remove(id);
+  @Delete(':productId')
+  deleteProduct(@Param('productId', ParseIntPipe) productId: number) {
+    return this.productsService.remove(productId);
   }
 }
+
