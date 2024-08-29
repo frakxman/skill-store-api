@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Category } from '../entities/category.entity';
 
 @Injectable()
 export class CategoriesService {
 
-  private categories = [
+  private categories: Category[] = [
     {
       id: 1,
       name: 'Category 1',

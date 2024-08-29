@@ -1,8 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Brand } from '../entities/brand.entity';
 
 @Injectable()
 export class BrandsService {
-  private brands = [
+  private brands: Brand[] = [
     {
       id: 1,
       name: 'Brand 1',
