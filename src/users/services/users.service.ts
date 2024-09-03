@@ -35,7 +35,7 @@ export class UsersService {
     return user;
   }
 
-  create(payload: any) {
+  create(payload: User) {
     const newUser = {
       id: this.users.length + 1,
       ...payload
@@ -44,7 +44,7 @@ export class UsersService {
     return newUser;
   }
 
-  update(id: number, payload: any) {
+  update(id: number, payload: User) {
     const user = this.findOne(id);
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     const index = this.users.findIndex((item) => item.id === id);
