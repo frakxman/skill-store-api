@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 
 import { ProductsService } from '../services/products.service';
+import { CreateProductDTO } from '../dtos/products.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -31,7 +32,7 @@ export class ProductsController {
   }
 
   @Post('')
-  createProduct(@Body() payload: any ) {
+  createProduct(@Body() payload: CreateProductDTO ) {
     return this.productsService.create(payload);
   }
 
