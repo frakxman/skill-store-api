@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 
 import { Product } from 'src/products/entities/product.entity';
-import { CreateProductDTO } from '../dtos/products.dto';
+import { CreateProductDTO, UpdateProductDTO } from '../dtos/products.dto';
 
 @Injectable()
 export class ProductsService {
@@ -50,7 +50,7 @@ export class ProductsService {
     return newProduct;
   }
 
-  update(id: number, payload: any) {
+  update(id: number, payload: UpdateProductDTO) {
     const product = this.findOne(id);
     if (!product) throw new HttpException('Product not found', HttpStatus.NOT_FOUND );
     const index = this.products.findIndex((item) => item.id === id);

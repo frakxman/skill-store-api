@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 
 import { ProductsService } from '../services/products.service';
-import { CreateProductDTO } from '../dtos/products.dto';
+import { CreateProductDTO, UpdateProductDTO } from '../dtos/products.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -38,7 +38,7 @@ export class ProductsController {
 
   // @Patch(':productId')
   @Put(':productId')
-  updateProduct(@Param('productId', ParseIntPipe) productId: number, @Body() payload: any ) {
+  updateProduct(@Param('productId', ParseIntPipe) productId: number, @Body() payload: UpdateProductDTO ) {
     return this.productsService.update(productId, payload);
   }
 
