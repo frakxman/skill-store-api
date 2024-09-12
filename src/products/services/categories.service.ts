@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Category } from '../entities/category.entity';
+import { CreateCategoryDTO, UpdateCategoryDTO } from '../dtos/categories.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -35,7 +36,7 @@ export class CategoriesService {
     return category;
   }
 
-  create(payload: any) {
+  create(payload: CreateCategoryDTO) {
     const newCategory = {
       id: this.categories.length + 1,
       ...payload
@@ -44,7 +45,7 @@ export class CategoriesService {
     return newCategory;
   }
 
-  update(id: number, payload: any) {
+  update(id: number, payload: UpdateCategoryDTO) {
     const category = this.findOne(id);
     if (!category) throw new HttpException('Category not found', HttpStatus.NOT_FOUND );
     const index = this.categories.findIndex((item) => item.id === id);

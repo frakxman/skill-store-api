@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { CreateOrderDTO, UpdateOrderDTO } from '../dtos/orders.dto';
 
 @Controller('orders')
 export class OrdersController {
@@ -24,7 +25,7 @@ export class OrdersController {
     }
 
     @Post()
-    create(@Body() payload: any) {
+    create(@Body() payload: CreateOrderDTO) {
         return {
             message: 'create',
             payload,
@@ -32,7 +33,7 @@ export class OrdersController {
     }
 
     @Put(':id')
-    update(@Param('id') id: number, @Body() payload: any) {
+    update(@Param('id') id: number, @Body() payload: UpdateOrderDTO) {
         return {
             id,
             payload,

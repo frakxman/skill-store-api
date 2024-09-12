@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { CreateCategoryDTO, UpdateCategoryDTO } from '../dtos/categories.dto';
 
 @Controller('categories')
 export class CategoriesController {
@@ -22,7 +23,7 @@ export class CategoriesController {
     }
 
     @Post()
-    create(@Body() payload: any) {
+    create(@Body() payload: CreateCategoryDTO) {
         return {
             message: 'create',
             payload,
@@ -30,7 +31,7 @@ export class CategoriesController {
     }
 
     @Put(':id')
-    update(@Param('id') id: number, @Body() payload: any) {
+    update(@Param('id') id: number, @Body() payload: UpdateCategoryDTO) {
         return {
             id,
             payload,
