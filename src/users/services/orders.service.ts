@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Order } from '../entities/order.entity';
+import { CreateOrderDTO, UpdateOrderDTO } from '../dtos/orders.dto';
 
 @Injectable()
 export class OrdersService {
@@ -33,7 +34,7 @@ export class OrdersService {
         return order;
     }
 
-    create(payload: any) {
+    create(payload: CreateOrderDTO) {
         const newOrder = {
             id: this.orders.length + 1,
             ...payload
@@ -42,7 +43,7 @@ export class OrdersService {
         return newOrder;
     }
     
-    update(id: number, payload: any) {
+    update(id: number, payload: UpdateOrderDTO) {
         const order = this.findOne(id);
         if (!order) throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
         const index = this.orders.findIndex((item) => item.id === id);

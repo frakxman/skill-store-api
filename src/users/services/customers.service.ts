@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Customer } from '../entities/customer.entity';
 import { Order } from '../entities/order.entity';
+import { CreateCustomerDTO, UpdateCustomerDTO } from '../dtos/customers.dto';
 
 @Injectable()
 export class CustomersService {
@@ -38,7 +39,7 @@ export class CustomersService {
         return customer;
     }
 
-    create(payload: Customer) {
+    create(payload: CreateCustomerDTO) {
         const newCustomer = {
             id: this.customers.length + 1,
             ...payload,
@@ -47,7 +48,7 @@ export class CustomersService {
         return newCustomer;
     }
 
-    update(id: number, payload: Customer) {
+    update(id: number, payload: UpdateCustomerDTO) {
         const customer = this.findOne(id);
         if (!customer) throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
         const index = this.customers.findIndex((item) => item.id === id);

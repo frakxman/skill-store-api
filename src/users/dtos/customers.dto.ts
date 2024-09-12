@@ -1,19 +1,23 @@
 import { PartialType } from "@nestjs/mapped-types";
-import { IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsString } from "class-validator";
 import { Order } from "../entities/order.entity";
 
 export class CreateCustomerDTO {
 
     @IsString()
+    @IsNotEmpty()
     name: string;
     
     @IsString()
+    @IsNotEmpty()
     email: string;
     
     @IsString()
+    @IsNotEmpty()
     password: string;
     
-    @IsString()
+    @IsArray()
+    @IsNotEmpty()
     orders: Order[];
 }
 
