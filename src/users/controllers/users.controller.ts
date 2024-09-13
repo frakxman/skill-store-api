@@ -18,14 +18,19 @@ export class UsersController {
     return this.usersService.findOne(userId);
   }
 
+  @Get(':userId/orders')
+  getOrders(@Param('userId', ParseIntPipe) userId: number) {
+    return this.usersService.getOrdersByUser(userId);
+  }
+
   @Post('')
-  createUser(@Body() payload: any ) {
+  createUser(@Body() payload: CreateUserDTO ) {
     return this.usersService.create(payload);
   }
 
   // @Patch(':userId')
   @Put(':userId')
-  updateUser(@Param('userId', ParseIntPipe) userId: number, @Body() payload: any ) {
+  updateUser(@Param('userId', ParseIntPipe) userId: number, @Body() payload: UpdateUserDTO ) {
     return this.usersService.update(userId, payload);
   }
 

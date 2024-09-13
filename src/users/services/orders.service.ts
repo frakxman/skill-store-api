@@ -1,64 +1,70 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Order } from '../entities/order.entity';
 import { CreateOrderDTO, UpdateOrderDTO } from '../dtos/orders.dto';
+import { User } from '../entities/user.entity';
+import { Product } from 'src/products/entities/product.entity';
 
 @Injectable()
 export class OrdersService {
 
-    private orders: Order[] = [
-        {
-            id: 1,
-            userId: 1,
-            products: [ ]
-        },
-        {
-            id: 2,
-            userId: 2,
-            products: []
-        },
-        {
-            id: 3,
-            userId: 3,
-            products: []
-        }
-    ];
+    // private orders: Order[] = [
+    //     {
+    //         id: 1,
+    //         date: new Date(),
+    //         userId: User{
+    //             id: 1,
+    //             name: 'John',
+    //             email: '
+    //         },
+    //         products: Product[},
+    //     {
+    //         id: 2,
+    //         userId: 2,
+    //         products: []
+    //     },
+    //     {
+    //         id: 3,
+    //         userId: 3,
+    //         products: []
+    //     }
+    // ];
 
     
-    findAll() {
-        return this.orders;
-    }
+    // findAll() {
+    //     return this.orders;
+    // }
     
-    findOne(id: number) {
-        const order = this.orders.find((item) => item.id === id);
-        if (!order) throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
-        return order;
-    }
+    // findOne(id: number) {
+    //     const order = this.orders.find((item) => item.id === id);
+    //     if (!order) throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
+    //     return order;
+    // }
 
-    create(payload: CreateOrderDTO) {
-        const newOrder = {
-            id: this.orders.length + 1,
-            ...payload
-        };
-        this.orders.push(newOrder);
-        return newOrder;
-    }
+    // create(payload: CreateOrderDTO) {
+    //     const newOrder = {
+    //         id: this.orders.length + 1,
+    //         ...payload
+    //     };
+    //     this.orders.push(newOrder);
+    //     return newOrder;
+    // }
     
-    update(id: number, payload: UpdateOrderDTO) {
-        const order = this.findOne(id);
-        if (!order) throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
-        const index = this.orders.findIndex((item) => item.id === id);
-        this.orders[index] = {
-            ...order,
-            ...payload
-        };
-        return this.orders[index];
-    }
+    // update(id: number, payload: UpdateOrderDTO) {
+    //     const order = this.findOne(id);
+    //     if (!order) throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
+    //     const index = this.orders.findIndex((item) => item.id === id);
+    //     this.orders[index] = {
+    //         ...order,
+    //         ...payload
+    //     };
+    //     return this.orders[index];
+    // }
     
-    remove(id: number) {
-        const index = this.orders.findIndex((item) => item.id === id);
-        this.orders.splice(index, 1);
-        return {
-            message: 'Order deleted successfully'
-        }
-    }
+    // remove(id: number) {
+    //     const index = this.orders.findIndex((item) => item.id === id);
+    //     this.orders.splice(index, 1);
+    //     return {
+    //         message: 'Order deleted successfully'
+    //     }
+    // }
 }

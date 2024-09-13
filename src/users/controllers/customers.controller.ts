@@ -1,8 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { CreateCustomerDTO, UpdateCustomerDTO } from '../dtos/customers.dto';
+import { CustomersService } from '../services/customers.service';
 
 @Controller('customers')
 export class CustomersController {
+
+    constructor(private readonly customersService: CustomersService) {}
 
     @Get('paginated')
     getProducts(
@@ -15,33 +18,28 @@ export class CustomersController {
         };
     }
 
+    @Get('')
+    getCustomers() {
+        return this.customersService.findAll();
+    }
+
     @Get(':customerId')
-    getOne(@Param('customerId') customerId: string) {
-        return { 
-            messsage: `customer ${customerId}`
-        };
+    getOne(@Param('customerId', ParseIntPipe) customerId: number) {
+        return this.customersService.findOne(customerId);
     }
 
     @Post()
     create(@Body() payload: CreateCustomerDTO) {
-        return {
-            message: 'create',
-            payload,
-        };
+        return this.customersService.create(payload);
     }
 
     @Put(':id')
-    update(@Param('id') id: number, @Body() payload: UpdateCustomerDTO) {
-        return {
-            id,
-            payload,
-        };
+    update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateCustomerDTO) {
+        return this.customersService.update(id, payload);
     }
 
     @Delete(':id')
-    delete(@Param('id') id: number) {
-        return {
-            message: `customer ${id} deleted`,
-        };
+    delete(@Param('id', ParseIntPipe) id: number) {
+        return this.customersService.remove(id);
     }
 }

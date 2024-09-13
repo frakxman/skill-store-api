@@ -1,6 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { CreateUserDTO, UpdateUserDTO } from '../dtos/users.dto';
+import { Order } from '../entities/order.entity';
+import { ProductsService } from 'src/products/services/products.service';
 
 @Injectable()
 export class UsersService {
@@ -25,6 +27,8 @@ export class UsersService {
       password: 'password3'
     }
   ];
+
+  constructor(private productService: ProductsService) {}
 
   findAll() {
     return this.users;
@@ -61,6 +65,15 @@ export class UsersService {
     this.users.splice(index, 1);
     return {
       message: `User #${id} has been removed`
+    };
+  }
+
+  getOrdersByUser(userId: number): Order {
+    const user = this.findOne(userId);
+    return {
+      date: new Date(),
+      user,
+      products: this.productService.findAll(),
     };
   }
 }

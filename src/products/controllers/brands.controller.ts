@@ -1,9 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { CreateBrandDTO, UpdateBrandDTO } from '../dtos/brands.dto';
+import { BrandsService } from '../services/brands.service';
 
 @Controller('brands')
 export class BrandsController {
-    @Get('paginated')
+
+  constructor(private brandService: BrandsService) { }
+
+  @Get('paginated')
   getProducts(
     @Query('limit') limit = 100,
     @Query('offset') offset = 0,
@@ -14,33 +18,28 @@ export class BrandsController {
     };
   }
 
+  @Get('')
+  getBrands() {
+    return this.brandService.findAll();
+  }
+
   @Get(':brandId')
-  getOne(@Param('brandId') brandId: string) {
-    return {
-        message: `brand ${brandId}`
-    };
+  getOne(@Param('brandId', ParseIntPipe) brandId: number) {
+    return this.brandService.findOne(brandId);
   }
 
   @Post()
   create(@Body() payload: CreateBrandDTO) {
-    return {
-      message: 'create',
-      payload,
-    };
+    return this.brandService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: UpdateBrandDTO) {
-    return {
-      id,
-      payload,
-    };
+  update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateBrandDTO) {
+    return this.brandService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      message: `brand ${id} deleted`,
-    };
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.brandService.remove(id);
   }
 }

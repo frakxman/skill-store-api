@@ -6,7 +6,7 @@ export class CreateOrderDTO {
 
     @IsNumber()
     @IsNotEmpty()
-    userId: number;
+    user: number;
     
     @IsArray()
     @IsNotEmpty()

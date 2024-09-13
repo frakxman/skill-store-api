@@ -10,15 +10,15 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('frakx')
-  getTest(): string {
-    return 'Hello Frakx';
-  } 
+  // @Get('frakx')
+  // getTest(): string {
+  //   return 'Hello Frakx';
+  // } 
 
   
 
-  @Get('categories/:categoryId/products/:productId')
-  getCategory(@Param() { categoryId, productId }) {
-    return `Product ${productId}, Category ${categoryId}`;
-  }
+  // @Get('categories/:categoryId/products/:productId')
+  // getCategory(@Param() { categoryId, productId }) {
+  //   return `Product ${productId}, Category ${categoryId}`;
+  // }
 }

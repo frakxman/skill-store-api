@@ -1,8 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { CreateCategoryDTO, UpdateCategoryDTO } from '../dtos/categories.dto';
+import { CategoriesService } from '../services/categories.service';
 
 @Controller('categories')
 export class CategoriesController {
+
+    constructor(private categoriesService: CategoriesService) {}
 
     @Get('paginated')
     getProducts(
@@ -15,33 +18,28 @@ export class CategoriesController {
         };
     }
 
+    @Get('')
+    getCategories() {
+        return this.categoriesService.findAll();
+    }
+
     @Get(':categoryId')
-    getOne(@Param('categoryId') categoryId: string) {
-        return {
-            message:`category ${categoryId}`
-        };
+    getOne(@Param('categoryId', ParseIntPipe) categoryId: number) {
+        return this.categoriesService.findOne(categoryId);
     }
 
     @Post()
     create(@Body() payload: CreateCategoryDTO) {
-        return {
-            message: 'create',
-            payload,
-        };
+        return this.categoriesService.create(payload);
     }
 
     @Put(':id')
-    update(@Param('id') id: number, @Body() payload: UpdateCategoryDTO) {
-        return {
-            id,
-            payload,
-        };
+    update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateCategoryDTO) {
+        return this.categoriesService.update(id, payload);
     }
 
     @Delete(':id')
-    delete(@Param('id') id: number) {
-        return {
-        message: `category ${id} deleted`,
-        };
+    delete(@Param('id', ParseIntPipe) id: number) {
+        return this.categoriesService.remove(id);
     }
 }
